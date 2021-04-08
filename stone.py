@@ -6,23 +6,21 @@ class Stone:
         self.state = state
 
     def reverse(self):
-        if self.state == StoneState.BLACK:
-            self.state = StoneState.WHITE
+        if self.state == Color.BLACK:
+            self.state = Color.WHITE
             return
 
-        if self.state == StoneState.WHITE:
-            self.state = StoneState.BLACK
+        if self.state == Color.WHITE:
+            self.state = Color.BLACK
             return
 
-    def debug(self):
-        if self.state == StoneState.BLACK:
-            print('○')
-            return
+    def __str__(self):
+        if self.state == Color.BLACK:
+            return '○'
 
-        if self.state == StoneState.WHITE:
-            print('●')
-            return
+        if self.state == Color.WHITE:
+            return '●'
 
-class StoneState(Enum):
+class Color(Enum):
     BLACK = auto()
     WHITE = auto()
