@@ -19,6 +19,10 @@ class RectBoard:
         self.__board[x][y] = elm
 
 
+    def get(self, x, y):
+        return self.__board[x][y]
+
+
     def draw(self):
         print(' ' * (len(str(self.height)) + 1), end='')
         draw_line(range(1, self.width + 1), expand=' ')
