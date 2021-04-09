@@ -11,7 +11,7 @@ def test_board():
 
     j = 0
     for i, test_number in enumerate(test_numbers):
-        board.add(test_number, i % width, j)
+        board.put(test_number, i % width, j)
         if i % width == 2:
             j += 1
 
@@ -21,4 +21,4 @@ def test_board():
             assert elm == test_numbers[i]
             i += 1
 
-    draw(board, range(board.width), range(board.height), search_max_length(board))
+    draw(board, map(str, range(board.width)), map(str, range(board.height)), search_max_length(board))
