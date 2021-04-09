@@ -23,19 +23,23 @@ class RectBoard:
         return self.__board[y][x]
 
 
-    def draw(self):
-        print(' ' * (len(str(self.height)) + 1), end='')
-        draw_line(range(1, self.width + 1), expand=' ')
+    def __iter__(self):
+        return iter(self.__board)
 
-        print('-' * (len(str(self.height)) + 1), end='')
-        draw_line('-' * self.width, expand='-')
 
-        for i, line in enumerate(self.__board):
-            print(str(i + 1) + ' ', end='')
-            draw_line(line, expand=' ')
+def draw(board):
+    print(' ' * (len(str(board.height)) + 1), end='')
+    draw_line(range(1, board.width + 1), expand=' ')
 
-            print('--', end='')
-            draw_line('-' * self.width, expand='-')
+    print('-' * (len(str(board.height)) + 1), end='')
+    draw_line('-' * board.width, expand='-')
+
+    for i, line in enumerate(board):
+        print(str(i + 1) + ' ', end='')
+        draw_line(line, expand=' ')
+
+        print('--', end='')
+        draw_line('-' * board.width, expand='-')
 
 
 def draw_line(line, expand=''):

@@ -1,5 +1,5 @@
 from othello.stone import Stone, Color
-from othello.board import RectBoard
+from othello.board import RectBoard, draw
 
 def test_overall():
     board = RectBoard(8, 8)
@@ -9,4 +9,4 @@ def test_overall():
     board.add(Stone(Color.BLACK), 3, 4)
     board.add(Stone(Color.BLACK), 4, 3)
 
-    board.draw()
+    draw(board)

@@ -1,10 +1,9 @@
-from othello.board import RectBoard
+from othello.board import RectBoard, draw
 
 
 def test_board():
     width, height = 3, 4
     board = RectBoard(width, height)
-    board.draw()
 
     test_patterns = []
     test_numbers = [1, 0, -1, 10**12]
@@ -16,8 +15,10 @@ def test_board():
         if i % width == 2:
             j += 1
 
-    j = 0
-    for i in range(width * height):
-        assert board.get(i % width, j) == test_numbers[i]
-        if i % width == 2:
-            j += 1
+    i = 0
+    for line in board:
+        for elm in line:
+            assert elm == test_numbers[i]
+            i += 1
+
+    draw(board)
