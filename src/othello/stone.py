@@ -2,25 +2,29 @@ from enum import Enum, auto
 
 
 class Stone:
-    def __init__(self, state):
-        self.state = state
+    def __init__(self, color):
+        self.__color = color
+
+    @property
+    def color(self):
+        return self.__color
 
     def reverse(self):
-        if self.state == Color.BLACK:
-            self.state = Color.WHITE
+        if self.__color == Color.BLACK:
+            self.__color = Color.WHITE
             return
 
-        if self.state == Color.WHITE:
-            self.state = Color.BLACK
+        if self.__color == Color.WHITE:
+            self.__color = Color.BLACK
             return
 
     def __str__(self):
-        if self.state == Color.BLACK:
+        if self.__color == Color.BLACK:
             return '○'
 
-        if self.state == Color.WHITE:
+        if self.__color == Color.WHITE:
             return '●'
 
-class Color(Enum):
+class __color(Enum):
     BLACK = auto()
     WHITE = auto()

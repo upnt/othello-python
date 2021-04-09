@@ -7,8 +7,9 @@ def test_stone():
    test_patterns = []
    test_patterns.append((str(stone1), '○'))
    test_patterns.append((str(stone2), '●'))
-   stone1.reverse()
    stone2.reverse()
+   test_patterns.append((stone1.color, stone2.color))
+   stone1.reverse()
    test_patterns.append((str(stone1), '●'))
    test_patterns.append((str(stone2), '○'))
 
