@@ -6,6 +6,7 @@ from setuptools import setup, find_packages
 setup(
     name="othello",
     version="1.0",
+    license="Apache License 2.0",
     description="You can play othello",
     author="upnt",
     url="https://github.com/upnt/othello-python",
