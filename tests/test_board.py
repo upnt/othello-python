@@ -1,4 +1,4 @@
-from othello.board import RectBoard, draw
+from othello.board import RectBoard, draw, search_max_length
 
 
 def test_board():
@@ -21,4 +21,4 @@ def test_board():
             assert elm == test_numbers[i]
             i += 1
 
-    draw(board)
+    draw(board, range(board.width), range(board.height), search_max_length(board))

@@ -27,29 +27,50 @@ class RectBoard:
         return iter(self.__board)
 
 
-def draw(board):
-    print(' ' * (len(str(board.height)) + 1), end='')
-    draw_line(range(1, board.width + 1), expand=' ')
+def draw(board, row, column, word_len, ismulti=False):
+    if ismulti:
+        word_len *= 2
+    print(' ' * (len(str(board.height)) + 2), end='')
+    _draw_line(row, expand=' ', word_len=word_len)
 
-    print('-' * (len(str(board.height)) + 1), end='')
-    draw_line('-' * board.width, expand='-')
+    print('-' * (len(str(board.height)) + 2), end='')
+    _draw_line(['-' * (word_len + 2)] * board.width, word_len=word_len)
 
-    for i, line in enumerate(board):
-        print(str(i + 1) + ' ', end='')
-        draw_line(line, expand=' ')
+    for i, line in zip(column, board):
+        if ismulti:
+            word_len = int(word_len / 2)
+        print(str(i).center(len(str(board.height)) + 2), end='')
+        _draw_line(line, expand=' ', word_len=word_len, ismulti=ismulti)
+        if ismulti:
+            word_len *= 2
 
-        print('--', end='')
-        draw_line('-' * board.width, expand='-')
+        print('-' * (len(str(board.height)) + 2), end='')
+        _draw_line(['-' * (word_len + 2)] * board.width, word_len=word_len)
 
 
-def draw_line(line, expand=''):
+def _draw_line(line, word_len, expand='', ismulti=False):
     for elm in line:
         print('|', end='')
         print(expand, end='')
         if elm is None:
-            print(' ', end='')
+            if ismulti:
+                print(' ' * word_len * 2, end='')
+            else:
+                print(' ' * word_len, end='')
         else:
-            print(elm, end='')
+            print(str(elm).rjust(word_len), end='')
         print(expand, end='')
 
     print('|')
+
+
+def search_max_length(board):
+    result = 0
+    for line in board:
+        for elm in line:
+            if elm is None:
+                continue
+            if len(str(elm)) > result:
+                result = len(str(elm))
+
+    return result
