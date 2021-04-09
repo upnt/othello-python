@@ -15,7 +15,7 @@ class RectBoard:
         return self.__height
 
 
-    def add(self, elm, x, y):
+    def put(self, elm, x, y):
         self.__board[y][x] = elm
 
 
@@ -36,10 +36,10 @@ def draw(board, row, column, word_len, ismulti=False):
     print('-' * (len(str(board.height)) + 2), end='')
     _draw_line(['-' * (word_len + 2)] * board.width, word_len=word_len)
 
-    for i, line in zip(column, board):
+    for y, line in zip(column, board):
         if ismulti:
             word_len = int(word_len / 2)
-        print(str(i).center(len(str(board.height)) + 2), end='')
+        print(y.center(len(str(board.height)) + 2), end='')
         _draw_line(line, expand=' ', word_len=word_len, ismulti=ismulti)
         if ismulti:
             word_len *= 2
