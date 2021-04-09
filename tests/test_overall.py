@@ -9,4 +9,4 @@ def test_overall():
     board.add(Stone(Color.BLACK), 3, 4)
     board.add(Stone(Color.BLACK), 4, 3)
 
-    draw(board)
+    draw(board, range(board.width), range(board.height), 2, ismulti=True)
