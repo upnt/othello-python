@@ -16,11 +16,11 @@ class RectBoard:
 
 
     def add(self, elm, x, y):
-        self.__board[x][y] = elm
+        self.__board[y][x] = elm
 
 
     def get(self, x, y):
-        return self.__board[x][y]
+        return self.__board[y][x]
 
 
     def draw(self):

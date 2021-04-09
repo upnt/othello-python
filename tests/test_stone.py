@@ -1,7 +1,7 @@
 from othello.stone import Stone, Color
 
 
-def test_with_valid_params():
+def test_stone():
    stone1 = Stone(Color.BLACK)
    stone2 = Stone(Color.WHITE)
    test_patterns = []
