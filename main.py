@@ -1,5 +1,5 @@
 import os
-from othello.othello import Othello
+from othello.othello import Othello, Event
 
 
 game = Othello()
@@ -13,11 +13,11 @@ for _ in range(60):
 
     row, column = text
     game.put(row, column)
-    if not game.next_turn():
-        os.system('cls')
-        game.draw()
-        break
     os.system('cls')
     game.draw()
+    if game.event is Event.PASS:
+        print('pass')
+    elif game.event is Event.END:
+        break
 
 print('Thank you for playing')

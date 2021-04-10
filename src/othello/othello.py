@@ -1,7 +1,18 @@
 from string import ascii_letters
+from enum import Enum, auto
 
 from othello.board import RectBoard, draw, search_max_length
 from othello.stone import Stone, Color, Candidate
+
+
+class Event(Enum):
+    PASS = auto()
+    END = auto()
+
+
+class Mode(Enum):
+    GAME = auto()
+    TEST = auto()
 
 
 class Othello:
@@ -9,7 +20,7 @@ class Othello:
     row_list = ascii_letters[26:26+size]
     column_list = list(map(str, range(1, size + 1)))
 
-    def __init__(self, mode='game'):
+    def __init__(self, mode=Mode.GAME):
         self.__board = RectBoard(Othello.size, Othello.size)
         self.__board.put(Stone(Color.WHITE), 3, 3)
         self.__board.put(Stone(Color.WHITE), 4, 4)
@@ -18,11 +29,15 @@ class Othello:
 
         self.__player_color = Color.BLACK
         self.__mode = mode
+        self.__event = None
 
-        if self.__mode == 'game':
+        if self.__mode is mode.GAME:
             self.__put_candidate()
 
 
+    @property
+    def event(self):
+        return self.__event
     def __reverse_list(self, x, y, x_i, y_i):
         try:
             if not isinstance(self.__board.get(x + x_i, y + y_i), Stone):
@@ -61,7 +76,6 @@ class Othello:
                 for x_i, y_i in direction:
                     if len(self.__reverse_list(w_i, h_i, x_i, y_i)) != 0:
                         result.append([w_i, h_i])
-                        print(result)
                         break
         return result
 
@@ -72,19 +86,24 @@ class Othello:
     def set_mode(self, mode):
         self.__mode = mode
 
-    def put(self, row, column):
-        if self.__mode == 'game':
-            self.game_put(row, column)
-        elif self.__mode == 'test':
-            self.test_put(row, column)
+        if mode is Mode.GAME:
+            self.__put_candidate()
+        elif mode is Mode.TEST:
+            self.__delete_candidate()
 
-    def test_put(self, row, column):
+    def put(self, row, column):
+        if self.__mode is Mode.GAME:
+            self.__game_put(row, column)
+        elif self.__mode == Mode.TEST:
+            self.__test_put(row, column)
+
+    def __test_put(self, row, column):
         x = Othello.row_list.index(row)
         y = Othello.column_list.index(column)
 
         self.__board.put(Stone(self.__player_color), x, y)
 
-    def game_put(self, row, column):
+    def __game_put(self, row, column):
         x = Othello.row_list.index(row)
         y = Othello.column_list.index(column)
 
@@ -101,18 +120,13 @@ class Othello:
             for i, j in self.__reverse_list(x, y, x_i, y_i):
                 self.__board.get(i, j).reverse()
 
+        self.__next_turn()
 
-    def next_turn(self):
-        if self.__player_color is Color.BLACK:
-            self.__player_color = Color.WHITE
-        else:
-            self.__player_color = Color.BLACK
 
+    def __next_turn(self):
+        self.__change_color()
         if not self.__put_candidate():
-            if self.__player_color is Color.BLACK:
-                self.__player_color = Color.WHITE
-            else:
-                self.__player_color = Color.BLACK
+            self.__change_color()
             return self.__put_candidate()
 
         return True
@@ -121,7 +135,13 @@ class Othello:
         self.__delete_candidate()
         candidate_list = self.__candidate_list()
         if len(candidate_list) == 0:
+            if self.__event is None:
+                self.__event = Event.PASS
+            else:
+                self.__event = Event.END
             return False
+        else:
+            self.__event = None
         for i, j in candidate_list:
             self.__board.put(Candidate(), i, j)
         return True
@@ -132,6 +152,11 @@ class Othello:
                 if isinstance(self.__board.get(i, j), Candidate):
                     self.__board.put(None, i, j)
 
+    def __change_color(self):
+            if self.__player_color is Color.BLACK:
+                self.__player_color = Color.WHITE
+            else:
+                self.__player_color = Color.BLACK
 
     def draw(self):
         return draw(self.__board, Othello.row_list, Othello.column_list, 1, True)
