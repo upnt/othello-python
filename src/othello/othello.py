@@ -38,6 +38,23 @@ class Othello:
     @property
     def event(self):
         return self.__event
+
+    def count_point(self):
+        num_space = 0
+        num_black = 0
+        num_white = 0
+        for i in range(Othello.size):
+            for j in range(Othello.size):
+                if isinstance(self.__board.get(i, j), Stone):
+                    if self.__board.get(i, j).color is Color.BLACK:
+                        num_black += 1
+                    else:
+                        num_white += 1
+                else:
+                    num_space += 1
+
+        return num_space, num_black, num_white
+
     def __reverse_list(self, x, y, x_i, y_i):
         try:
             if not isinstance(self.__board.get(x + x_i, y + y_i), Stone):
