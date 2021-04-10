@@ -13,6 +13,10 @@ for _ in range(60):
 
     row, column = text
     game.put(row, column)
+    if not game.next_turn():
+        os.system('cls')
+        game.draw()
+        break
     os.system('cls')
     game.draw()
 

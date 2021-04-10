@@ -1,4 +1,4 @@
-from othello.stone import Stone, Color
+from othello.stone import Stone, Color, Candidate
 
 
 def test_stone():
@@ -15,3 +15,7 @@ def test_stone():
 
    for execute_result, expected_result in test_patterns:
        assert execute_result == expected_result
+
+def test_candidate():
+    candidate = Candidate()
+    assert str(candidate) == '・'

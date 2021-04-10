@@ -25,6 +25,10 @@ class Stone:
         if self.__color == Color.WHITE:
             return '●'
 
+class Candidate:
+    def __str__(self):
+        return '・'
+
 class Color(Enum):
     BLACK = auto()
     WHITE = auto()
